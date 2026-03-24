@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eAIP Draft - Project International</title>
+    <style>
+        /* Reset and Base Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            font-size: 13px; 
+            line-height: 1.4;
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+            background-color: #525659; /* PDF viewer dark gray background */
+            color: #000000; 
+        }
+
+        /* Sidebar & Tab Container Styles */
+        .sidebar { 
+            width: 320px; /* Initial width */
+            min-width: 200px;
+            max-width: 600px;
+            background-color: #e6e6e6; 
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0; 
+        }
+        
+        .sidebar-header-area {
+            padding: 10px 10px 0 10px;
+            background-color: #d4d0c8; 
+        }
+
+        /* The Tabs */
+        .tab-row { display: flex; border-bottom: 1px solid #a0a0a0; padding-top: 5px; }
+        .tab-btn { background-color: #e5e5e5; border: 1px solid #a0a0a0; border-bottom: none; padding: 4px 10px; margin-right: 2px; cursor: pointer; font-size: 11px; font-family: Arial, sans-serif; color: #333; border-radius: 4px 4px 0 0; outline: none; }
+        .tab-btn:hover { background-color: #f0f0f0; }
+        .tab-btn.active { background-color: #ffffff; font-weight: bold; color: #000; position: relative; top: 1px; border-bottom: 1px solid #ffffff; }
+
+        .effective-date { font-weight: bold; font-size: 16px; text-align: center; padding: 15px 0; background-color: #ffffff; border-bottom: 2px solid #000080; color: #000; }
+
+        /* Content Area inside Sidebar */
+        .sidebar-content-area { flex: 1; overflow-y: auto; background-color: #ffffff; }
+        .tab-content { display: none; padding: 10px 0; }
+        .tab-content.active { display: block; }
+
+        /* Tree Menu Styles */
+        .tree-menu { list-style: none; padding-left: 0; }
+        .tree-menu li { margin: 0; }
+        .tree-menu a, .caret { display: block; padding: 4px 10px; color: #0000ee; text-decoration: none; cursor: pointer; user-select: none; font-size: 13px; }
+        .tree-menu a:hover, .caret:hover { text-decoration: underline; }
+        .part-header { background-color: #000080; color: #ffffff; font-weight: bold; padding: 5px 10px; margin: 5px 0; }
+        .caret::before { content: "+"; color: #0000ee; display: inline-block; margin-right: 5px; font-size: 12px; font-family: monospace; }
+        .caret-down::before { content: "-"; }
+        .nested { display: none; list-style: none; padding-left: 0; }
+        .nested a, .nested .caret { padding-left: 25px; }
+        .nested .nested a { padding-left: 40px; }
+        .nested.active { display: block; }
+
+        /* --- THE RESIZER --- */
+        .resizer {
+            width: 6px;
+            background-color: #a0a0a0;
+            cursor: col-resize;
+            flex-shrink: 0;
+            z-index: 10;
+            border-left: 1px solid #ffffff;
+            border-right: 1px solid #666666;
+        }
+        .resizer:hover, .resizer:active {
+            background-color: #000080; /* Highlights blue when grabbed */
+        }
+
+        /* Main Content Styles */
+        .main-content { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 30px; 
+            scroll-behavior: smooth; 
+        }
+        
+        /* The "Page" */
+        .eaip-container { 
+            max-width: 850px; /* Constrains the width */
+            margin: 0 auto;   /* Centers the page */
+            background-color: #fff; 
+            padding: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Gives it a document drop-shadow */
+        }
+
+        /* Tables and Typography */
+        h1 { color: #990000; border-bottom: 2px solid #990000; padding-bottom: 5px; font-size: 18px; margin-bottom: 20px; font-weight: bold; }
+        h2 { color: #000000; font-size: 16px; padding-top: 30px; margin-top: 15px; font-weight: bold; }
+        .section-header { font-weight: bold; margin-top: 25px; background-color: #e6e6e6; padding: 5px 8px; border: 1px solid #000000; color: #000000; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; margin-top: -1px; font-size: 12px; }
+        th, td { border: 1px solid #000000; padding: 6px 8px; text-align: left; vertical-align: top; }
+        th { background-color: #f2f2f2; width: 45%; font-weight: normal; color: #000000; }
+        .placeholder-text { padding: 20px; color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header-area">
+        <div class="tab-row">
+            <button class="tab-btn active" onclick="openTab(event, 'AIP')">AIP</button>
+            <button class="tab-btn" onclick="openTab(event, 'AMDT')">AMDT</button>
+            <button class="tab-btn" onclick="openTab(event, 'SUPs')">SUPs</button>
+            <button class="tab-btn" onclick="openTab(event, 'AICs')">AICs</button>
+        </div>
+    </div>
+    
+    <div class="effective-date">Effective 19 MAR 2026</div>
+
+    <div class="sidebar-content-area">
+        <div id="AIP" class="tab-content active">
+            <div class="part-header">- PART 1 - GENERAL (GEN)</div>
+            <ul class="tree-menu">
+                <li><span class="caret">GEN 0</span><ul class="nested"><li><a href="#">Placeholder</a></li></ul></li>
+            </ul>
+			<div class="part-header">- PART 2 - ENROUTE (ENR)</div>
+            <ul class="tree-menu">
+                <li><span class="caret">ENR 0</span><ul class="nested"><li><a href="#">Placeholder</a></li></ul></li>
+            </ul>
+            <div class="part-header">- PART 3 - AERODROMES (AD)</div>
+            <ul class="tree-menu">
+                <li>
+                    <span class="caret caret-down">AD 2 AERODROMES</span>
+                    <ul class="nested active">
+                        <li><a href="#ad-2-xxxx">XXXX - PROJECT INTL</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="AMDT" class="tab-content"><div class="placeholder-text">Amendments</div></div>
+        <div id="SUPs" class="tab-content"><div class="placeholder-text">Supplements</div></div>
+        <div id="AICs" class="tab-content"><div class="placeholder-text">Circulars</div></div>
+    </div>
+</div>
+
+<div class="resizer" id="dragMe"></div>
+
+<div class="main-content">
+    <div class="eaip-container">
+        <h1>Part 3 - Aerodromes (AD)</h1>
+        
+        <h2 id="ad-2-xxxx">XXXX AD 2. AERODROMES</h2>
+        
+        <div class="section-header">XXXX AD 2.1 AERODROME LOCATION INDICATOR AND NAME</div>
+        <table>
+            <tr><th>1. Location Indicator</th><td>XXXX</td></tr>
+            <tr><th>2. Aerodrome Name</th><td>PROJECT INTERNATIONAL</td></tr>
+        </table>
+
+        <div class="section-header">XXXX AD 2.2 AERODROME GEOGRAPHICAL AND ADMINISTRATIVE DATA</div>
+        <table>
+            <tr><th>1. ARP coordinates and site at AD</th><td>123456N 0123456W<br>Midpoint of RWY 09/27</td></tr>
+            <tr><th>2. Elevation / Reference temperature</th><td>50 M (164 FT) / 28°C</td></tr>
+            <tr><th>3. Remarks</th><td>NIL</td></tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    // --- RESIZER LOGIC ---
+    const resizer = document.getElementById('dragMe');
+    const sidebar = document.getElementById('sidebar');
+    let x = 0;
+    let w = 0;
+
+    const mouseDownHandler = function(e) {
+        x = e.clientX;
+        w = sidebar.getBoundingClientRect().width;
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+        // Prevent text selection while dragging
+        document.body.style.userSelect = 'none';
+    };
+
+    const mouseMoveHandler = function(e) {
+        const dx = e.clientX - x;
+        sidebar.style.width = `${w + dx}px`;
+    };
+
+    const mouseUpHandler = function() {
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+        document.body.style.userSelect = '';
+    };
+
+    resizer.addEventListener('mousedown', mouseDownHandler);
+
+    // --- MENU & TAB LOGIC ---
+    var toggler = document.getElementsByClassName("caret");
+    for (var i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function() {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+
+    function openTab(evt, tabName) {
+        var tabcontent = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
+        var tablinks = document.getElementsByClassName("tab-btn");
+        for (var i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
